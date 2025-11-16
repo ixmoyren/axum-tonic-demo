@@ -7,3 +7,8 @@
 # protobuf
 src/pb/todo.rs
 src/pb/todo_descriptors.bin
+
+# SQLite
+my_db.sqlite
+my_db.sqlite-shm
+my_db.sqlite-wal
