@@ -3,3 +3,7 @@
 # IDEA
 /.idea
 *.iml
+
+# protobuf
+src/pb/todo.rs
+src/pb/todo_descriptors.bin
