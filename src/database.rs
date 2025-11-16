@@ -74,7 +74,7 @@ pub mod service {
 
     pub(crate) async fn stream_todos(
         pool: &SqlitePool,
-    ) -> anyhow::Result<BoxStream<Result<Todo, sqlx::Error>>> {
+    ) -> anyhow::Result<BoxStream<'_, Result<Todo, sqlx::Error>>> {
         let recs = sqlx::query_as::<_, Todo>(
             "select t.id, t.description, t.done from todos t order by id",
         )

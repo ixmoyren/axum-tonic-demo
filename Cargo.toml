@@ -6,10 +6,8 @@ edition = "2024"
 [dependencies]
 anyhow = "1.0.100"
 axum = "0.8.7"
-build = "0.0.2"
 clap = { version = "4.5.51", features = ["derive"] }
 futures = "0.3.31"
-help = "0.0.0"
 hyper = "1.8.1"
 prost = "0.14.1"
 serde = { version = "1.0.228", features = ["derive"] }
@@ -18,7 +16,10 @@ sqlx = { version = "0.8.6", default-features = false, features = ["runtime-tokio
 tabled = "0.20.0"
 tonic = "0.14.2"
 tower = { version = "0.5.2", default-features = true, features = ["steer"] }
-tokio = "1.48.0"
+tokio = { version = "1.48.0", features = ["full"] }
+reqwest = "0.12.24"
+tonic-prost = "0.14.2"
+tonic-reflection = "0.14.2"
 
 [build-dependencies]
 protox = "0.9.0"
