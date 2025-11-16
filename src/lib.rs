@@ -1,4 +1,4 @@
-mod database;
-mod grpc;
-mod pb;
-mod rest;
+pub mod database;
+pub mod grpc;
+pub mod pb;
+pub mod rest;

@@ -17,7 +17,8 @@ serde_json = { version = "1.0.145", features = ["std"] }
 sqlx = { version = "0.8.6", default-features = false, features = ["runtime-tokio-rustls", "sqlite", "macros", "migrate", "json"] }
 tabled = "0.20.0"
 tonic = "0.14.2"
-tower = "0.5.2"
+tower = { version = "0.5.2", default-features = true, features = ["steer"] }
+tokio = "1.48.0"
 
 [build-dependencies]
 protox = "0.9.0"
