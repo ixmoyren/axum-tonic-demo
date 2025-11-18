@@ -8,7 +8,7 @@
 
 ## 起因
 
-在 Rust 生态中，`Axum` 是很流行的 `Web` 框架，构建在 `Tokio` `Tower` `Hyper` 这三者之上。而 `Tonic` 是 Rust 中一个原生的 `GRPC` 客户端和服务端的实现。而 `Tonic` 中关键的路由部分的实现，则是在 `Axum` 上构建的。同时，`Tonic` 也大量使用了 `Tokio` `Tower` `Hyper` 的大量工具。`GRPC` 本身就是构建在 HTTP2 之上的远程调用框架。
+在 Rust 生态中，`Axum` 是很流行的 `Web` 框架，构建在 `Tokio` `Tower` `Hyper` 这三者之上。而 `Tonic` 是 Rust 中一个原生的 `GRPC` 客户端和服务端的实现。而 `Tonic` 中关键的路由部分，则是在 `Axum` 上实现的。同时，`Tonic` 也大量使用了 `Tokio` `Tower` `Hyper` 的大量工具。`GRPC` 本身就是构建在 HTTP2 之上的远程调用框架。
 
 那么，在同一个 `Hyper` 服务器中，能否同时响应 REST 和 GRPC 请求么？基于 `Axum` 和 `Tonic` 是可以做到的，需要在 `server` 代码中区分一下流量，将 REST 请求转发给由 `Axum` 实现的 Web 服务器模块，将 GRPC 请求转发给由 `Tonic` 实现的 GRPC 服务器模块。GRPC 和 REST 在于，GRPC 要求 HTTP 的 `content-type` 必须是 `application/grpc`。那么只要声明 `application/grpc` 的 HTTP 请求，统一由 `Tonic` 进行处理，其余的 HTTP 请求交由 `Axum` 处理。
 
