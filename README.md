@@ -1,10 +1,40 @@
 # axum-tonic-demo
 
-> 这是一个示例项目，用来展示如何在同一个服务器中同时响应 REST 和 GRPC 请求
+> 这是一个 Rust Web 生态示例项目，用来展示如何在同一个服务器中同时响应 REST 和 GRPC 请求
 
 一个简单的 Todo 应用，数据主要保存在 `SQLite` 数据库中，提供添加一个任务、完成一个任务、查看全部任务这三个接口。
 
 应用是客户端-服务器的架构，使用的时候，应该先启动服务器，而后通过客户端完成相关的操作。提供一个获取全部任务的 `rest_client` 客户端，模拟通过 REST 接口访问服务器。提供一个全功能的 `grpc_client`，模拟通过 GRPC 接口访问服务器，实现添加一个任务、完成一个任务、查看全部任务等功能。
+
+## 起因
+
+在 Rust 生态中，`Axum` 是很流行的 `Web` 框架，构建在 `Tokio` `Tower` `Hyper` 这三者之上。而 `Tonic` 是 Rust 中一个原生的 `GRPC` 客户端和服务端的实现。而 `Tonic` 中关键的路由部分的实现，则是在 `Axum` 上构建的。同时，`Tonic` 也大量使用了 `Tokio` `Tower` `Hyper` 的大量工具。`GRPC` 本身就是构建在 HTTP2 之上的远程调用框架。
+
+那么，在同一个 `Hyper` 服务器中，能否同时响应 REST 和 GRPC 请求么？基于 `Axum` 和 `Tonic` 是可以做到的，需要在 `server` 代码中区分一下流量，将 REST 请求转发给由 `Axum` 实现的 Web 服务器模块，将 GRPC 请求转发给由 `Tonic` 实现的 GRPC 服务器模块。GRPC 和 REST 在于，GRPC 要求 HTTP 的 `content-type` 必须是 `application/grpc`。那么只要声明 `application/grpc` 的 HTTP 请求，统一由 `Tonic` 进行处理，其余的 HTTP 请求交由 `Axum` 处理。
+
+```rust
+#[tokio::main]
+async fn main() -> anyhow::Result<()> {
+    //...
+
+    let service = Steer::new([rest, grpc], |req: &hyper::Request<_>, _services: &[_]| {
+        req.headers()
+            .get(hyper::header::CONTENT_TYPE)
+            .and_then(|content_type| {
+                content_type
+                    .as_bytes()
+                    .starts_with(b"application/grpc")
+                    .then_some(1)
+            })
+            .unwrap_or(0)
+    });
+
+    let listener = TcpListener::bind("127.0.0.1:3000").await?;
+    axum::serve(listener, Shared::new(service)).await?;
+
+    //...
+}
+```
 
 ## 启动服务器
 
