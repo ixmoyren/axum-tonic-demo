@@ -12,12 +12,12 @@ use tower::{make::Shared, steer::Steer};
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
-    let url = "sqlite://my_db.sqlite?mode=rwc&cache=shared";
-    check_and_create_db::<Sqlite>(url)
+    let db = "sqlite://my_db.sqlite?mode=rwc&cache=shared";
+    check_and_create_db::<Sqlite>(db)
         .await
         .expect("Check for database exceptions");
     let pool = SqlitePoolOptions::new()
-        .connect(url)
+        .connect(db)
         .await
         .expect("Failed to create the database connection pool");
     let conn = pool
