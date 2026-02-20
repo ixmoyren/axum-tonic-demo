@@ -5,33 +5,44 @@ package todo;
 message Empty {}
 
 message TodoItem {
+  // 待办编号
   int64 id = 1;
+  // 待办描述
   string description = 2;
+  // 待办是否完成
   bool done = 3;
 }
 
 message TodoList {
+  // 待办列表
   repeated TodoItem list = 1;
 }
 
 message AddTodoRequest {
+  // 待办描述
   string description = 1;
 }
 
 message AddTodoResponse {
+  // 待办编号
   int64 id = 1;
 }
 
 message CompleteTodoRequest {
+  // 待办编号
   int64 id = 1;
 }
 
 message CompleteTodoResponse {
+  // 完成状态
   bool completed = 1;
 }
 
 service Todo {
+  // 获取全部的待办
   rpc GetTodoList(Empty) returns (TodoList);
+  // 添加一个待办
   rpc AddTodoItem(AddTodoRequest) returns (AddTodoResponse);
+  // 完成一个待办
   rpc CompleteTodo(CompleteTodoRequest) returns (CompleteTodoResponse);
 }
