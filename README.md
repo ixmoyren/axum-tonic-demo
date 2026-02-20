@@ -1,5 +1,7 @@
 # axum-tonic-demo
 
+![License](https://img.shields.io/crates/l/PROJECT.svg)
+
 > 这是一个 Rust Web 生态示例项目，用来展示如何在一个服务器中同时响应 REST 和 GRPC 请求
 
 这是一个简单的 Todo 应用，数据主要保存在 `SQLite` 数据库中，提供添加一个任务、完成一个任务、查看全部任务这三个接口。
@@ -86,8 +88,6 @@ cargo run -r --bin grpc_client -- -l
 ```shell
 cargo run -r --bin grpc_client -- -c <任务 ID>
 ```
-
-![License](https://img.shields.io/crates/l/PROJECT.svg)
 
 ## 许可
 
