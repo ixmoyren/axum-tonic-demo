@@ -12,3 +12,9 @@ src/pb/todo_descriptors.bin
 my_db.sqlite
 my_db.sqlite-shm
 my_db.sqlite-wal
+
+# Node.js
+node_modules/
+
+# Scalar static file
+scalar-warpper/static/scalar-api-reference.js

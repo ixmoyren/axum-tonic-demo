@@ -1,17 +1,32 @@
-[package]
-name = "axum-tonic-demo"
+[workspace]
+members = ["scalar-warpper"]
+resolver = "3"
+
+[workspace.package]
 version = "0.1.0"
 edition = "2024"
+license = "MIT OR APACHE"
+
+[workspace.dependencies]
+axum = "0.8.8"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = { version = "1.0.149", features = ["std"] }
+
+[package]
+name = "axum-tonic-demo"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
 
 [dependencies]
 anyhow = "1.0.102"
-axum = "0.8.7"
-clap = { version = "4.5.51", features = ["derive"] }
-futures = "0.3.31"
+axum = { workspace = true }
+clap = { version = "4.5.60", features = ["derive"] }
+futures = "0.3.32"
 hyper = "1.8.1"
 prost = "0.14.3"
-serde = { version = "1.0.228", features = ["derive"] }
-serde_json = { version = "1.0.149", features = ["std"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
 sqlx = { version = "0.8.6", default-features = false, features = ["runtime-tokio-rustls", "sqlite", "macros", "migrate", "json"] }
 tabled = "0.20.0"
 tonic = "0.14.5"
