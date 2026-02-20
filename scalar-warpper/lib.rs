@@ -9,7 +9,7 @@ use utoipa::openapi::OpenApi;
 const SCALAR_API_REFERENCE_JS: &str = include_str!("static/scalar-api-reference.js");
 
 const SCALAR_SCRIPT: &str = "scalar-api-reference.js";
-const OPENAPI_JSON: &str = "api-docs/openapi.json";
+const OPENAPI_JSON: &str = "api-docs";
 
 pub trait Serialize: SerdeSerialize {}
 

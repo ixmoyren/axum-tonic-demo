@@ -11,6 +11,8 @@ license = "MIT OR APACHE"
 axum = "0.8.8"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = { version = "1.0.149", features = ["std"] }
+scalar-warpper = { version = "0.1.0", path = "scalar-warpper" }
+utoipa = { version = "5.4.0", features = ["axum_extras"] }
 
 [package]
 name = "axum-tonic-demo"
@@ -25,15 +27,18 @@ clap = { version = "4.5.60", features = ["derive"] }
 futures = "0.3.32"
 hyper = "1.8.1"
 prost = "0.14.3"
+reqwest = "0.13.2"
 serde = { workspace = true }
 serde_json = { workspace = true }
 sqlx = { version = "0.8.6", default-features = false, features = ["runtime-tokio-rustls", "sqlite", "macros", "migrate", "json"] }
+scalar-warpper = { workspace = true }
 tabled = "0.20.0"
-tonic = "0.14.5"
-tower = { version = "0.5.3", default-features = true, features = ["steer"] }
 tokio = { version = "1.49.0", features = ["full"] }
-reqwest = "0.13.2"
+tonic = "0.14.5"
 tonic-prost = "0.14.5"
+tower = { version = "0.5.3", default-features = true, features = ["steer"] }
+utoipa = { workspace = true }
+utoipa-axum = { version = "0.2.0" }
 
 [build-dependencies]
 protox = "0.9.1"

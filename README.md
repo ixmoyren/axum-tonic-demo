@@ -44,6 +44,12 @@ async fn main() -> anyhow::Result<()> {
 cargo run -r --bin server
 ```
 
+### 访问服务器的 OpenApi 文档
+
+浏览器访问 http://localhost:3000/openapi 即可打开 scalar 界面
+
+访问 http://localhost:3000/openapi/api-docs 即可获取 json 格式的文档
+
 ## 借助 rest_client 查看全部任务
 
 ```shell

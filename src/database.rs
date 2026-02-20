@@ -63,15 +63,6 @@ pub mod service {
         pub(crate) done: bool,
     }
 
-    pub(crate) async fn list_todos(pool: &SqlitePool) -> anyhow::Result<Vec<Todo>> {
-        let recs = sqlx::query_as::<_, Todo>(
-            "select t.id, t.description, t.done from todos t order by id",
-        )
-        .fetch_all(pool)
-        .await?;
-        Ok(recs)
-    }
-
     pub(crate) async fn stream_todos(
         pool: &SqlitePool,
     ) -> anyhow::Result<BoxStream<'_, Result<Todo, sqlx::Error>>> {

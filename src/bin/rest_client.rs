@@ -10,7 +10,7 @@ struct Task {
 
 #[tokio::main]
 async fn main() {
-    let url = "http://127.0.0.1:3000/all";
+    let url = "http://127.0.0.1:3000/todo/all";
     let response = reqwest::get(url).await.unwrap();
 
     let body = response.text().await.unwrap();

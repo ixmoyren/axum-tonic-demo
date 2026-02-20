@@ -3,12 +3,15 @@ use axum_tonic_demo::{
     database::{check_and_create_db, migrate},
     grpc::TodoGrpcService,
     pb::todo_server::TodoServer,
-    rest::todo_router,
+    rest::{ApiDoc, todo_router},
 };
+use scalar_warrper::{Scalar, Servable};
 use sqlx::{Sqlite, sqlite::SqlitePoolOptions};
 use std::path::Path;
 use tokio::net::TcpListener;
 use tower::{make::Shared, steer::Steer};
+use utoipa::OpenApi;
+use utoipa_axum::router::OpenApiRouter;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -28,7 +31,11 @@ async fn main() -> anyhow::Result<()> {
         .await
         .expect("During the migrate phase, the execution of the database script failed");
 
-    let rest: Router<()> = todo_router(pool.clone());
+    let (router, api) = OpenApiRouter::with_openapi(ApiDoc::openapi())
+        .nest("/todo", todo_router(pool.clone()))
+        .split_for_parts();
+
+    let rest: Router<()> = router.merge(Scalar::with_url("/openapi", api));
 
     let grpc: Router<()> = tonic::service::Routes::builder()
         .add_service(TodoServer::new(TodoGrpcService::new(pool.clone())))
