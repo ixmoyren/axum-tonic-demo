@@ -5,13 +5,13 @@ use axum_tonic_demo::{
     pb::todo_server::TodoServer,
     rest::{ApiDoc, todo_router},
 };
-use scalar_warrper::{Scalar, Servable};
 use sqlx::{Sqlite, sqlite::SqlitePoolOptions};
 use std::path::Path;
 use tokio::net::TcpListener;
 use tower::{make::Shared, steer::Steer};
 use utoipa::OpenApi;
 use utoipa_axum::router::OpenApiRouter;
+use utoipa_scalar_warpper::Scalar;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
@@ -35,7 +35,7 @@ async fn main() -> anyhow::Result<()> {
         .nest("/todo", todo_router(pool.clone()))
         .split_for_parts();
 
-    let rest: Router<()> = router.merge(Scalar::with_url("/openapi", api));
+    let rest: Router<()> = router.merge(Scalar::new(api).with_url("/openapi"));
 
     let grpc: Router<()> = tonic::service::Routes::builder()
         .add_service(TodoServer::new(TodoGrpcService::new(pool.clone())))

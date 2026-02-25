@@ -1,5 +1,4 @@
 [workspace]
-members = ["scalar-warpper"]
 resolver = "3"
 
 [workspace.package]
@@ -11,7 +10,6 @@ license = "MIT OR APACHE"
 axum = "0.8.8"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = { version = "1.0.149", features = ["std"] }
-scalar-warpper = { version = "0.1.0", path = "scalar-warpper" }
 utoipa = { version = "5.4.0", features = ["axum_extras"] }
 
 [package]
@@ -31,14 +29,14 @@ reqwest = "0.13.2"
 serde = { workspace = true }
 serde_json = { workspace = true }
 sqlx = { version = "0.8.6", default-features = false, features = ["runtime-tokio-rustls", "sqlite", "macros", "migrate", "json"] }
-scalar-warpper = { workspace = true }
 tabled = "0.20.0"
 tokio = { version = "1.49.0", features = ["full"] }
 tonic = "0.14.5"
 tonic-prost = "0.14.5"
 tower = { version = "0.5.3", default-features = true, features = ["steer"] }
-utoipa = { workspace = true }
+utoipa = { workspace = true, features = ["axum_extras"] }
 utoipa-axum = { version = "0.2.0" }
+utoipa-scalar-warpper = { version = "0.2.0", features = ["axum"] }
 
 [build-dependencies]
 protox = "0.9.1"
